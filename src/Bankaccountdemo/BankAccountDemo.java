@@ -26,6 +26,8 @@ public class BankAccountDemo {
                 System.out.println("\n\n==== CREATE NEW ACCOUNT ====\n");
                 System.out.print("Enter first name: ");
                 String firstName = scanner.next().trim();
+
+                System.out.print("Enter last name: ");
                 String lastName = scanner.next().trim();
                 scanner.nextLine();
 

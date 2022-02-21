@@ -16,7 +16,7 @@ public class Account {
     }
 
 
-    public Boolean register () throws Exception{
+    public Boolean register (Account a) throws Exception{
         try{
             DataBase bd = new DataBase();
             Connection c = DataBase.connection();
@@ -36,7 +36,7 @@ public class Account {
             String cardNumber= this.generateCardNumber();
             String code = this.generatePincode();
             Statement stmt3= c.createStatement();
-            String sql3= " INSERT INTO Card VALUES (null, '"+last_account_id+"' , '"+cardNumber+"', '"+code+"') ";
+            String sql3= " INSERT INTO card VALUES (null, '"+last_account_id+"' , '"+cardNumber+"', '"+code+"') ";
 
             stmt3.executeUpdate(sql3);
 

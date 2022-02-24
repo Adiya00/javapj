@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Scanner;
 
-
+/* действие с финансовыми опрециями*/
 public class Operation {
 
     private String cardnumber;
@@ -17,10 +17,11 @@ public class Operation {
      this.cardnumber = cardnumber;
      this.pincode = pincode;
     }
-
+    /* показывает баланс
+    * @param cardnumber
+     */
 public Integer showBalance (String cardnumber){
-    Scanner scanner = new Scanner(System.in);
-            DataBase bs = new DataBase();
+
         try {
             Connection c = DataBase.connection();
             Statement stmt = c.createStatement();

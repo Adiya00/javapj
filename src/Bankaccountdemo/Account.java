@@ -4,29 +4,43 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-
+/* Действие с аккаунтом пользователя*/
 public class Account {
     private String firstName;
     private String lastName;
     private Integer balance;
+    static int id ;
 
     Account (String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
+    Account (int id , String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.id = id;
+    }
 
-
+/* Регистрирует нового пользователя
+* @return
+* @throws java.lang.Exception
+*/
     public Boolean register (Account a) throws Exception{
+        //делаем регистрацию
         try{
             DataBase bd = new DataBase();
             Connection c = DataBase.connection();
             Statement stmt = c.createStatement();
-            String sql = " INSERT INTO Account VALUES (null,'"+this.firstName+"','"+this.lastName+"') ";
+            String sql = " INSERT INTO Account VALUES (null ,'"+this.firstName+"','"+this.lastName+"') ";
+//            String sql = " INSERT INTO Account VALUES (null , "' , '"+this.firstName+"','"+this.lastName+"') ";
+
             stmt.executeUpdate(sql);
 
+            //last id
             Statement stmt2= c.createStatement();
             String sql2 = "SELECT LAST_iNSERT_ID()";
-            ResultSet rs2 =stmt.executeQuery(sql2);
+            String sql6 = "SELECT LASTVAL()";
+            ResultSet rs2 =stmt.executeQuery(sql6);
 
             int last_account_id=0;
             while (rs2.next()) {
@@ -34,12 +48,15 @@ public class Account {
             }
 
             String cardNumber= this.generateCardNumber();
+
             String code = this.generatePincode();
+            // add cardnumber and pincode
             Statement stmt3= c.createStatement();
             String sql3= " INSERT INTO card VALUES (null, '"+last_account_id+"' , '"+cardNumber+"', '"+code+"') ";
 
             stmt3.executeUpdate(sql3);
 
+            //создаем сумму баланса
             Statement stmt4= c.createStatement();
             String sql4 = "INSERT INTO Balance VALUES ( '"+cardNumber+"')";
             stmt4.executeUpdate(sql4);
@@ -58,7 +75,9 @@ public class Account {
 
         }
     }
-
+    /*генерирует номер карты
+    * @return
+    */
 
 public String generateCardNumber () {
 
@@ -72,7 +91,9 @@ public String generateCardNumber () {
 
 return new String(cardNumber);
 }
-
+/* генерирует пинкод
+* @return
+ */
 public String generatePincode () {
 
     int length = 4;

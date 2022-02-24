@@ -1,15 +1,30 @@
 package Bankaccountdemo;
+import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class DataBase {
-    private static final String dbClassNAme= "com.mysql.cj.jdbc.Driver";
-    private static final String CONNECTION = "jdbc:mysql://localhost:3306/bank_account_demo";
-    private static final String USER = "root";
-    private static final String PASSWORD = "1234";
+//    private static final String dbClassName= "com.mysql.cj.jdbc.Driver";
+    private static final String CONNECTION = "jdbc:postgresql://localhost:5432/postgres";
+    private static final String USER = "postgres";
+    private static final String PASSWORD = "root";
 
-    public static java.sql.Connection connection() throws Exception{
-        Class.forName(dbClassNAme);
-        return DriverManager.getConnection(CONNECTION, USER, PASSWORD);
+//    public static java.sql.Connection connection() throws Exception{
+////        Class.forName(dbClassName);
+//
+//        return DriverManager.getConnection(CONNECTION, USER, PASSWORD);
+//    }
+    public static Connection connection() throws SQLException {
+        try {
+            Connection connection = DriverManager.getConnection(CONNECTION , USER , PASSWORD);
+            return connection;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
     }
+
 }
